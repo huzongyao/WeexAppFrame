@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">WeexApp</string>
+    <string name="qrcode_scan_intro">将二维码/条码放入框内，即可自动扫描。</string>
+    <string name="qr_tips_too_dark">环境过暗，请打开闪光灯</string>
+    <string name="qr_tip_scan_timeout">扫描超时了</string>
+    <string name="refresh">刷新</string>
+    <string name="scan_qr_code">扫码</string>
+</resources>
