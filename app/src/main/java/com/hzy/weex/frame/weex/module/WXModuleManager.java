@@ -12,6 +12,7 @@ public class WXModuleManager {
             WXSDKEngine.registerComponent("richtext", RichText.class);
             WXSDKEngine.registerModule("geolocation", GeolocationModule.class);
             WXSDKEngine.registerModule("imagePicker", ImagePickerModule.class);
+            WXSDKEngine.registerModule("navigator", ExNavigatorModule.class);
         } catch (Exception e) {
             e.printStackTrace();
         }

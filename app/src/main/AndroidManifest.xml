@@ -20,6 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <!--启动页面-->
         <activity
             android:name=".activity.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar.FullScreen">
@@ -30,9 +31,11 @@
             </intent-filter>
         </activity>
 
+        <!--weex业务显示页面-->
         <activity
             android:name=".activity.WXPageActivity"
             android:theme="@style/AppTheme.NoActionBar">
+            <!--接收默认的weex intent-->
             <intent-filter>
                 <action android:name="com.taobao.android.intent.action.WEEX" />
 
@@ -47,8 +50,24 @@
                 <data android:scheme="file" />
                 <data android:scheme="wxpage" />
             </intent-filter>
+            <!--接收我们自己的intent-->
+            <intent-filter>
+                <action android:name="com.taobao.android.intent.action.WEEX" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="com.hzy.weex.frame.intent.category.WEEX" />
+
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+                <data android:scheme="file" />
+                <data android:scheme="wxpage" />
+            </intent-filter>
         </activity>
 
+        <!--二维码扫描页面-->
         <activity
             android:name=".activity.QRScanActivity"
             android:clearTaskOnLaunch="true"
@@ -58,6 +77,23 @@
             <intent-filter>
                 <action android:name="com.google.zxing.client.android.SCAN" />
                 <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.hzy.weex.frame.intent.QR_SCAN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!--用于监听arouter://weex.app.com/xxx的跳转-->
+        <activity android:name=".activity.ARouterActivity">
+            <intent-filter>
+                <data
+                    android:host="weex.app.com"
+                    android:scheme="arouter" />
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
         </activity>
     </application>

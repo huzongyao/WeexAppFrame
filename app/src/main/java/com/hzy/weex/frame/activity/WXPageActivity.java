@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.net.Uri;
@@ -31,11 +32,11 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.hzy.weex.frame.BuildConfig;
 import com.hzy.weex.frame.R;
 import com.hzy.weex.frame.activity.base.WXBaseActivity;
+import com.hzy.weex.frame.constant.RequestCode;
 import com.hzy.weex.frame.constant.RouterHub;
 import com.hzy.weex.frame.event.HotReloadEvent;
 import com.hzy.weex.frame.event.HttpResultEvent;
-import com.hzy.weex.frame.constant.RequestCode;
-import com.hzy.weex.frame.weex.WeexConstant;
+import com.hzy.weex.frame.weex.WXConstant;
 import com.hzy.weex.frame.weex.adapter.NavigatorAdapter;
 import com.hzy.weex.frame.weex.adapter.WXAnalyzerDelegate;
 import com.hzy.weex.frame.weex.https.HotRefreshManager;
@@ -61,16 +62,14 @@ import java.util.HashMap;
 public class WXPageActivity extends WXBaseActivity
         implements IWXRenderListener, WXSDKInstance.NestedInstanceInterceptor {
 
-    private static final String EXTRA_STATUS_BAR = "EXTRA_STATUS_BAR";
-    private static final String EXTRA_TOOL_BAR = "EXTRA_TOOL_BAR";
     private static final String TAG = "WXPageActivity";
 
     private Toolbar mToolbar;
     private FrameLayout mContentView;
     private ProgressBar mProgressBar;
 
-    private boolean mHasStatusBar;
-    private boolean mHasToolBar;
+    private boolean mHasStatusBar = true;
+    private boolean mHasToolBar = true;
     private BroadcastReceiver mReceiver;
     private Uri mUri;
     private WXSDKInstance mInstance;
@@ -123,21 +122,21 @@ public class WXPageActivity extends WXBaseActivity
         String scheme = mUri.getScheme();
         if (mUri.isHierarchical() && (TextUtils.equals(scheme, "http")
                 || TextUtils.equals(scheme, "https"))) {
-            String weexTpl = mUri.getQueryParameter(WeexConstant.WEEX_TPL_KEY);
+            String weexTpl = mUri.getQueryParameter(WXConstant.WEEX_TPL_KEY);
             String url = TextUtils.isEmpty(weexTpl) ? mUri.toString() : weexTpl;
             loadWXFromService(url);
         }
     }
 
     private void loadPageFromUri() {
-        if (WeexConstant.WX_PAGE_SCHEMA.equals(mUri.getScheme()) ||
+        if (WXConstant.WX_PAGE_SCHEMA.equals(mUri.getScheme()) ||
                 TextUtils.equals("true", mUri.getQueryParameter("_wxpage"))) {
             mUri = mUri.buildUpon().scheme("http").build();
             loadWXFromService(mUri.toString());
             startHotRefresh();
         } else if (TextUtils.equals("http", mUri.getScheme()) ||
                 TextUtils.equals("https", mUri.getScheme())) {
-            String weexTpl = mUri.getQueryParameter(WeexConstant.WEEX_TPL_KEY);
+            String weexTpl = mUri.getQueryParameter(WXConstant.WEEX_TPL_KEY);
             String url = TextUtils.isEmpty(weexTpl) ? mUri.toString() : weexTpl;
             loadWXFromService(url);
             startHotRefresh();
@@ -250,11 +249,12 @@ public class WXPageActivity extends WXBaseActivity
     private void loadUriFromIntent() {
         Intent intent = getIntent();
         mUri = intent.getData();
-        mHasStatusBar = intent.getBooleanExtra(EXTRA_STATUS_BAR, true);
-        mHasToolBar = intent.getBooleanExtra(EXTRA_TOOL_BAR, true);
-
+        if (mUri != null) {
+            mHasToolBar =
+                    mUri.getBooleanQueryParameter(WXConstant.WX_HIDE_ACTION_BAR, true);
+        }
         if (mUri == null) {
-            mUri = Uri.parse(WeexConstant.DEFAULT_WX_URL);
+            mUri = Uri.parse(WXConstant.DEFAULT_WX_URL);
         }
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -285,7 +285,7 @@ public class WXPageActivity extends WXBaseActivity
             actionBar.setTitle(title);
         }
         if (!mHasStatusBar) {
-            BarUtils.setStatusBarAlpha(this, 0);
+            BarUtils.setStatusBarColor(this, Color.TRANSPARENT);
         }
         mToolbar.setVisibility(mHasToolBar ? View.VISIBLE : View.GONE);
         mToolbar.setNavigationOnClickListener(view -> finish());
@@ -467,7 +467,7 @@ public class WXPageActivity extends WXBaseActivity
                 if (mUri != null) {
                     if (TextUtils.equals(mUri.getScheme(), "http") ||
                             TextUtils.equals(mUri.getScheme(), "https")) {
-                        String weexTpl = mUri.getQueryParameter(WeexConstant.WEEX_TPL_KEY);
+                        String weexTpl = mUri.getQueryParameter(WXConstant.WEEX_TPL_KEY);
                         String url = TextUtils.isEmpty(weexTpl) ? mUri.toString() : weexTpl;
                         loadWXFromService(url);
                     } else {

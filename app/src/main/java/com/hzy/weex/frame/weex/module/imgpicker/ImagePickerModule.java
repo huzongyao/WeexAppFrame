@@ -1,9 +1,9 @@
 package com.hzy.weex.frame.weex.module.imgpicker;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 
-import com.blankj.utilcode.util.UriUtils;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.taobao.weex.annotation.JSMethod;
@@ -26,10 +26,11 @@ public class ImagePickerModule extends WXModule implements Destroyable {
     @JSMethod
     @SuppressWarnings("unused")
     public boolean pickImage(HashMap<String, Object> options, final JSCallback callback) {
-        Activity activity = (Activity) mWXSDKInstance.getContext();
-        if (activity == null) {
+        Context context = mWXSDKInstance.getContext();
+        if (context == null || !(context instanceof Activity)) {
             return false;
         }
+        Activity activity = (Activity) context;
         Intent intent = new Intent(activity, ImageGridActivity.class);
         intent.putExtra(ImageGridActivity.EXTRAS_TAKE_PICKERS, true);
         activity.startActivityForResult(intent, 120);
