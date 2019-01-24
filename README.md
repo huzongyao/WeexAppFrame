@@ -1,6 +1,11 @@
 # WeexAppFrame
 A Weex android framework just based like weex playground based on weex sdk
 
+### Details
+* implement IWXHttpAdapter with OkHttpClient, so we can use cache to speed up.
+* implement IWXImgLoaderAdapter with Glide, so it will support gif and also function well.
+* implement IWebSocketAdapter with OkHttp WebSocket.
+
 ### About Me
  * GitHub: [http://huzongyao.github.io/](http://huzongyao.github.io/)
  * ITEye博客：[http://hzy3774.iteye.com/](http://hzy3774.iteye.com/)

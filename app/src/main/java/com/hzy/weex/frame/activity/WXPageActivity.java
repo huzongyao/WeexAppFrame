@@ -24,15 +24,17 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.hzy.weex.frame.BuildConfig;
 import com.hzy.weex.frame.R;
 import com.hzy.weex.frame.activity.base.WXBaseActivity;
+import com.hzy.weex.frame.constant.RouterHub;
 import com.hzy.weex.frame.event.HotReloadEvent;
 import com.hzy.weex.frame.event.HttpResultEvent;
-import com.hzy.weex.frame.utils.RequestCode;
+import com.hzy.weex.frame.constant.RequestCode;
 import com.hzy.weex.frame.weex.WeexConstant;
 import com.hzy.weex.frame.weex.adapter.NavigatorAdapter;
 import com.hzy.weex.frame.weex.adapter.WXAnalyzerDelegate;
@@ -55,6 +57,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 
+@Route(path = RouterHub.WX_PAGE_ACTIVITY)
 public class WXPageActivity extends WXBaseActivity
         implements IWXRenderListener, WXSDKInstance.NestedInstanceInterceptor {
 

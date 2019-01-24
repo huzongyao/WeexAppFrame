@@ -2,6 +2,7 @@ package com.hzy.weex.frame;
 
 import android.app.Application;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.Utils;
 import com.hzy.weex.frame.weex.adapter.GlideImageAdapter;
@@ -18,6 +19,7 @@ public class MainApplication extends Application {
     public void onCreate() {
         super.onCreate();
         initAndroidUtils();
+        initARouter();
         initWXSdk();
     }
 
@@ -28,6 +30,14 @@ public class MainApplication extends Application {
                 .setLogHeadSwitch(false);
     }
 
+    private void initARouter() {
+        if (BuildConfig.DEBUG) {
+            ARouter.openLog();
+            ARouter.openDebug();
+        }
+        ARouter.init(this);
+    }
+
     private void initWXSdk() {
         InitConfig config = new InitConfig.Builder()
                 .setImgAdapter(new GlideImageAdapter())
@@ -36,6 +46,6 @@ public class MainApplication extends Application {
                 .setWebSocketAdapterFactory(new OkWSAdapterFactory())
                 .build();
         WXSDKEngine.initialize(this, config);
-        WXModuleManager.init();
+        WXModuleManager.initialize();
     }
 }

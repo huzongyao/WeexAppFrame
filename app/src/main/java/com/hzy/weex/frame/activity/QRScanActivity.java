@@ -12,9 +12,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.hzy.weex.frame.R;
+import com.hzy.weex.frame.constant.RouterHub;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -23,6 +25,7 @@ import cn.bingoogolapple.qrcode.core.QRCodeView;
 import cn.bingoogolapple.qrcode.core.ScanBoxView;
 import cn.bingoogolapple.qrcode.zxing.ZXingView;
 
+@Route(path = RouterHub.QR_SCAN_ACTIVITY)
 public class QRScanActivity extends AppCompatActivity
         implements QRCodeView.Delegate {
 

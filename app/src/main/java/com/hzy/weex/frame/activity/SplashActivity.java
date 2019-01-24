@@ -3,12 +3,15 @@ package com.hzy.weex.frame.activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.blankj.utilcode.util.ActivityUtils;
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.hzy.weex.frame.R;
+import com.hzy.weex.frame.constant.RouterHub;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
+@Route(path = RouterHub.SPLASH_ACTIVITY)
 public class SplashActivity extends AppCompatActivity {
 
     private static final long SPLASH_DELAY = 800L;
@@ -24,7 +27,7 @@ public class SplashActivity extends AppCompatActivity {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                ActivityUtils.startActivity(WXPageActivity.class);
+                ARouter.getInstance().build(RouterHub.WX_PAGE_ACTIVITY).navigation();
                 finish();
             }
         }, SPLASH_DELAY);

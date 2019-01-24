@@ -1,4 +1,4 @@
-package com.hzy.weex.frame.weex.module;
+package com.hzy.weex.frame.weex.module.component;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

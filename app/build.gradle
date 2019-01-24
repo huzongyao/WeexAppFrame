@@ -20,6 +20,11 @@ android {
             abiFilters 'armeabi-v7a'
         }
         resConfigs "zh-rCN"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
     }
     compileOptions {
         targetCompatibility JavaVersion.VERSION_1_8
@@ -63,4 +68,11 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:3.12.1'
     implementation 'com.blankj:utilcode:1.22.9'
     implementation 'com.github.bumptech.glide:glide:4.8.0'
+    implementation('com.lzy.widget:imagepicker:0.6.1') {
+        exclude group: 'com.android.support'
+    }
+    implementation('com.alibaba:arouter-api:1.4.1') {
+        exclude group: 'com.android.support'
+    }
+    annotationProcessor 'com.alibaba:arouter-compiler:1.2.2'
 }

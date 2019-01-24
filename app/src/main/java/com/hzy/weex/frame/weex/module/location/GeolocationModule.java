@@ -1,4 +1,4 @@
-package com.hzy.weex.frame.weex.module;
+package com.hzy.weex.frame.weex.module.location;
 
 import android.Manifest;
 import android.app.Activity;
