@@ -69,7 +69,7 @@ public class WXPageActivity extends WXBaseActivity
     private ProgressBar mProgressBar;
 
     private boolean mHasStatusBar = true;
-    private boolean mHasToolBar = true;
+    private boolean mHasToolBar = false;
     private BroadcastReceiver mReceiver;
     private Uri mUri;
     private WXSDKInstance mInstance;
@@ -249,12 +249,12 @@ public class WXPageActivity extends WXBaseActivity
     private void loadUriFromIntent() {
         Intent intent = getIntent();
         mUri = intent.getData();
-        if (mUri != null) {
-            mHasToolBar =
-                    mUri.getBooleanQueryParameter(WXConstant.WX_HIDE_ACTION_BAR, true);
-        }
         if (mUri == null) {
             mUri = Uri.parse(WXConstant.DEFAULT_WX_URL);
+        }
+        if (mUri != null) {
+            mHasToolBar = mUri.getBooleanQueryParameter(WXConstant.WX_SHOW_ACTION_BAR,
+                    false);
         }
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
