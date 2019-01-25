@@ -5,4 +5,6 @@
     <string name="qr_tip_scan_timeout">扫描超时了</string>
     <string name="refresh">刷新</string>
     <string name="scan_qr_code">扫码</string>
+    <string name="choose_file_picker">请选择一个文件管理器</string>
+    <string name="choose_photo_camera">请选择一个相机</string>
 </resources>
