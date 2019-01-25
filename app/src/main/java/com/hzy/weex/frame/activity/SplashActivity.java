@@ -14,7 +14,7 @@ import java.util.TimerTask;
 @Route(path = RouterHub.SPLASH_ACTIVITY)
 public class SplashActivity extends AppCompatActivity {
 
-    private static final long SPLASH_DELAY = 800L;
+    private static final long SPLASH_DELAY = 500L;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
