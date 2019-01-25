@@ -27,7 +27,7 @@ public enum WXScriptHttpLoader {
     /**
      * Load script with default WXHttpAdapter
      */
-    public void sendRequest(String url) {
+    public void sendRequest(String url, String instanceId) {
         IWXHttpAdapter adapter = WXSDKManager.getInstance().getIWXHttpAdapter();
         WXRequest request = new WXRequest();
         request.url = url;
@@ -65,11 +65,11 @@ public enum WXScriptHttpLoader {
                 }
                 if (statusCode >= 200 && statusCode <= 299 && response.originalData != null) {
                     EventBus.getDefault()
-                            .post(new HttpResultEvent(HttpResultEvent.HTTP_RESULT_OK, url,
-                                    new String(response.originalData)));
+                            .post(new HttpResultEvent(instanceId, HttpResultEvent.HTTP_RESULT_OK,
+                                    url, new String(response.originalData)));
                 } else {
-                    EventBus.getDefault()
-                            .post(new HttpResultEvent(HttpResultEvent.HTTP_RESULT_FAIL, url));
+                    EventBus.getDefault().post(new HttpResultEvent(instanceId,
+                            HttpResultEvent.HTTP_RESULT_FAIL, url));
                 }
             }
         });

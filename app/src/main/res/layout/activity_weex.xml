@@ -26,15 +26,12 @@
         <FrameLayout
             android:id="@+id/weex_content"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#ffffff" />
+            android:layout_height="match_parent" />
 
-        <ProgressBar
-            android:id="@+id/weex_progress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="gone" />
+        <com.hzy.weex.frame.widget.StatusLayout
+            android:id="@+id/status_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </FrameLayout>
 
 </android.support.design.widget.CoordinatorLayout>

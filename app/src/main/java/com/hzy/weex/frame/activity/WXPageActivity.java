@@ -22,7 +22,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -41,6 +40,7 @@ import com.hzy.weex.frame.weex.adapter.NavigatorAdapter;
 import com.hzy.weex.frame.weex.adapter.WXAnalyzerDelegate;
 import com.hzy.weex.frame.weex.https.HotRefreshManager;
 import com.hzy.weex.frame.weex.https.WXScriptHttpLoader;
+import com.hzy.weex.frame.widget.StatusLayout;
 import com.taobao.weex.IWXRenderListener;
 import com.taobao.weex.RenderContainer;
 import com.taobao.weex.WXSDKEngine;
@@ -66,7 +66,7 @@ public class WXPageActivity extends WXBaseActivity
 
     private Toolbar mToolbar;
     private FrameLayout mContentView;
-    private ProgressBar mProgressBar;
+    private StatusLayout mStatusLayout;
 
     private boolean mHasStatusBar = true;
     private boolean mHasToolBar = false;
@@ -150,7 +150,7 @@ public class WXPageActivity extends WXBaseActivity
     }
 
     private void loadWXFromService(final String url) {
-        mProgressBar.setVisibility(View.VISIBLE);
+        mStatusLayout.loading();
         if (mInstance != null) {
             mInstance.destroy();
         }
@@ -161,26 +161,28 @@ public class WXPageActivity extends WXBaseActivity
         mInstance.setNestedInstanceInterceptor(this);
         mInstance.setTrackComponent(true);
         mContentView.addView(renderContainer);
-        WXScriptHttpLoader.INSTANCE.sendRequest(url);
+        WXScriptHttpLoader.INSTANCE.sendRequest(url, mInstance.getInstanceId());
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     @SuppressWarnings("unused")
     public void onLoadService(HttpResultEvent event) {
+        if (!mInstance.getInstanceId().equals(event.instanceId)) {
+            return;
+        }
         String url = event.url;
         switch (event.status) {
             case HttpResultEvent.HTTP_RESULT_OK:
                 try {
                     mConfigMap.put("bundleUrl", url);
-                    mInstance.render(TAG, event.text, mConfigMap,
-                            null, WXRenderStrategy.APPEND_ASYNC);
+                    mInstance.render(TAG, event.text, mConfigMap, null,
+                            WXRenderStrategy.APPEND_ASYNC);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
                 break;
             case HttpResultEvent.HTTP_RESULT_FAIL:
-                mProgressBar.setVisibility(View.GONE);
-                ToastUtils.showShort("network error!");
+                mStatusLayout.error();
                 break;
             default:
                 break;
@@ -276,7 +278,7 @@ public class WXPageActivity extends WXBaseActivity
         mToolbar = findViewById(R.id.weex_toolbar);
         setSupportActionBar(mToolbar);
         mContentView = findViewById(R.id.weex_content);
-        mProgressBar = findViewById(R.id.weex_progress);
+        mStatusLayout = findViewById(R.id.status_layout);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -289,6 +291,7 @@ public class WXPageActivity extends WXBaseActivity
         }
         mToolbar.setVisibility(mHasToolBar ? View.VISIBLE : View.GONE);
         mToolbar.setNavigationOnClickListener(view -> finish());
+        mStatusLayout.setOnInfoClickListener(v -> reloadWXPage());
     }
 
     private void registerBroadcastReceiver() {
@@ -415,12 +418,12 @@ public class WXPageActivity extends WXBaseActivity
         if (mWxAnalyzerDelegate != null) {
             mWxAnalyzerDelegate.onWeexRenderSuccess(instance);
         }
-        mProgressBar.setVisibility(View.INVISIBLE);
+        mStatusLayout.hide();
     }
 
     @Override
     public void onRefreshSuccess(WXSDKInstance instance, int width, int height) {
-        mProgressBar.setVisibility(View.GONE);
+        mStatusLayout.hide();
     }
 
     @Override
@@ -428,7 +431,7 @@ public class WXPageActivity extends WXBaseActivity
         if (mWxAnalyzerDelegate != null) {
             mWxAnalyzerDelegate.onException(instance, errCode, msg);
         }
-        mProgressBar.setVisibility(View.GONE);
+        mStatusLayout.error();
         if (!TextUtils.isEmpty(errCode) && errCode.contains("|")) {
             String[] errCodeList = errCode.split("\\|");
             String code = errCodeList[1];

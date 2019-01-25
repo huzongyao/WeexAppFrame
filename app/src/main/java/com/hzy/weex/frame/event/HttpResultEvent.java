@@ -8,13 +8,16 @@ public class HttpResultEvent {
     public int status;
     public String url;
     public String text;
+    public String instanceId;
 
-    public HttpResultEvent(int status, String url) {
+    public HttpResultEvent(String instanceId, int status, String url) {
+        this.instanceId = instanceId;
         this.status = status;
         this.url = url;
     }
 
-    public HttpResultEvent(int status, String url, String text) {
+    public HttpResultEvent(String instanceId, int status, String url, String text) {
+        this.instanceId = instanceId;
         this.status = status;
         this.url = url;
         this.text = text;
