@@ -177,6 +177,7 @@ public class WXPageActivity extends WXBaseActivity
                     mConfigMap.put("bundleUrl", url);
                     mInstance.render(TAG, event.text, mConfigMap, null,
                             WXRenderStrategy.APPEND_ASYNC);
+                    LogUtils.d("Rend from: " + url);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
