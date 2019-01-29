@@ -1,15 +1,19 @@
 package com.hzy.weex.frame.weex.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Looper;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.widget.ImageView;
 
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.Utils;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.DrawableImageViewTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.taobao.weex.WXSDKManager;
 import com.taobao.weex.adapter.IWXImgLoaderAdapter;
 import com.taobao.weex.common.WXImageStrategy;
@@ -32,8 +36,10 @@ public class GlideImageAdapter implements IWXImgLoaderAdapter {
                     return;
                 }
                 String placeHolder = "";
+                WXImageStrategy.ImageListener listener = null;
                 if (strategy != null) {
                     placeHolder = strategy.placeHolder;
+                    listener = strategy.getImageListener();
                 }
                 boolean placeHolderEmpty = StringUtils.isTrimEmpty(placeHolder);
                 boolean imageEmpty = StringUtils.isTrimEmpty(url);
@@ -51,8 +57,26 @@ public class GlideImageAdapter implements IWXImgLoaderAdapter {
                     if (url.startsWith("//")) {
                         imageUrl = "http:" + url;
                     }
+                    WXImageStrategy.ImageListener finalListener = listener;
                     Glide.with(context).load(imageUrl).apply(mRequestOptions)
-                            .transition(DrawableTransitionOptions.withCrossFade()).into(view);
+                            .into(new DrawableImageViewTarget(view) {
+                                @Override
+                                public void onResourceReady(@NonNull Drawable resource,
+                                                            Transition<? super Drawable> transition) {
+                                    super.onResourceReady(resource, transition);
+                                    if (finalListener != null) {
+                                        finalListener.onImageFinish(url, view, true, null);
+                                    }
+                                }
+
+                                @Override
+                                public void onLoadFailed(@Nullable Drawable errorDrawable) {
+                                    super.onLoadFailed(errorDrawable);
+                                    if (finalListener != null) {
+                                        finalListener.onImageFinish(url, view, false, null);
+                                    }
+                                }
+                            });
                 }
             } catch (Throwable t) {
                 t.printStackTrace();
