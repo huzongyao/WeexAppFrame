@@ -16,7 +16,6 @@ import okhttp3.Cache;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Headers;
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -44,8 +43,7 @@ public class OkWXHttpAdapter implements IWXHttpAdapter {
         String bodyString = request.body == null ? "{}" : request.body;
 
         RequestBody body = HttpMethod.requiresRequestBody(method) ?
-                RequestBody.create(MediaType.parse("application/json"), bodyString)
-                : null;
+                RequestBody.create(null, bodyString) : null;
 
         Headers.Builder headersBuilder = new Headers.Builder();
         if (request.paramMap != null) {
