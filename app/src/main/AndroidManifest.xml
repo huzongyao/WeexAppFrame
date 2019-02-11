@@ -26,6 +26,7 @@
         <!--启动页面-->
         <activity
             android:name=".activity.SplashActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,6 +38,7 @@
         <!--weex业务显示页面-->
         <activity
             android:name=".activity.WXPageActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <!--接收默认的weex intent-->
             <intent-filter>

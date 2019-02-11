@@ -24,6 +24,9 @@ import com.taobao.weex.utils.WXLogUtils;
 
 /**
  * 覆盖原来的WXNavigatorModule，
+ * 因为所SDK里面写死了Intent类型为com.taobao.android.intent.category.WEEX，
+ * 这样，我们的app跳转intent有可能被别人的weex应用接收去，从而造成BUG
+ * 所以我们自己加了一个Intent category
  * 防止intent category和别人的一样
  */
 public class ExNavigatorModule extends WXModule {

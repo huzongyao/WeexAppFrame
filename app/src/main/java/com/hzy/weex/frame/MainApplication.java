@@ -5,6 +5,7 @@ import android.app.Application;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.Utils;
+import com.hzy.weex.frame.constant.AppConfig;
 import com.hzy.weex.frame.weex.adapter.GlideImageAdapter;
 import com.hzy.weex.frame.weex.adapter.OkWSAdapterFactory;
 import com.hzy.weex.frame.weex.adapter.OkWXHttpAdapter;
@@ -25,13 +26,13 @@ public class MainApplication extends Application {
 
     private void initAndroidUtils() {
         Utils.init(this);
-        LogUtils.getConfig().setLogSwitch(BuildConfig.DEBUG)
+        LogUtils.getConfig().setLogSwitch(AppConfig.DEBUG)
                 .setBorderSwitch(false)
                 .setLogHeadSwitch(false);
     }
 
     private void initARouter() {
-        if (BuildConfig.DEBUG) {
+        if (AppConfig.DEBUG) {
             ARouter.openLog();
             ARouter.openDebug();
         }

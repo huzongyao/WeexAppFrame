@@ -25,12 +25,14 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.hzy.weex.frame.BuildConfig;
 import com.hzy.weex.frame.R;
 import com.hzy.weex.frame.activity.base.WXBaseActivity;
+import com.hzy.weex.frame.constant.AppConfig;
 import com.hzy.weex.frame.constant.RequestCode;
 import com.hzy.weex.frame.constant.RouterHub;
 import com.hzy.weex.frame.event.HotReloadEvent;
@@ -114,8 +116,8 @@ public class WXPageActivity extends WXBaseActivity
     }
 
     private void startScanQrCode() {
-        Intent intent = new Intent(this, QRScanActivity.class);
-        startActivityForResult(intent, RequestCode.REQUEST_CODE_SCAN_QR_CODE);
+        ARouter.getInstance().build(RouterHub.QR_SCAN_ACTIVITY)
+                .navigation(this, RequestCode.REQUEST_CODE_SCAN_BY_WX);
     }
 
     private void reloadWXPage() {
@@ -238,7 +240,7 @@ public class WXPageActivity extends WXBaseActivity
      * Hot reload for develop
      */
     private void startHotRefresh() {
-        if (BuildConfig.DEBUG) {
+        if (AppConfig.DEBUG) {
             try {
                 String host = new URL(mUri.toString()).getHost();
                 String wsUrl = "ws://" + host + ":8082";
@@ -394,7 +396,19 @@ public class WXPageActivity extends WXBaseActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (mInstance != null) {
+        if (requestCode == RequestCode.REQUEST_CODE_SCAN_BY_WX) {
+            if (resultCode == RESULT_OK && data != null) {
+                String content = data.getStringExtra(QRScanActivity.EXTRA_CONTENT);
+                if (!StringUtils.isTrimEmpty(content)) {
+                    if (AppConfig.DEBUG) {
+                        ToastUtils.showShort(content);
+                    }
+                    Intent intent = new Intent(this, WXPageActivity.class);
+                    intent.setData(Uri.parse(content));
+                    startActivity(intent);
+                }
+            }
+        } else if (mInstance != null) {
             mInstance.onActivityResult(requestCode, resultCode, data);
         }
     }

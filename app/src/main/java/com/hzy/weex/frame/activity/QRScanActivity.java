@@ -2,7 +2,6 @@ package com.hzy.weex.frame.activity;
 
 import android.Manifest;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.annotation.Nullable;
@@ -30,6 +29,7 @@ public class QRScanActivity extends AppCompatActivity
         implements QRCodeView.Delegate {
 
     public static final String EXTRA_CONTENT = "EXTRA_CONTENT";
+    public static final String EXTRA_VIBERATE = "EXTRA_VIBERATE";
     private static final long SCAN_TIME_OUT = 30_000L;
     private ZXingView mZXingView;
     private String mAmbientBrightnessTip;
@@ -37,6 +37,7 @@ public class QRScanActivity extends AppCompatActivity
     private ImageView mFlashTogger;
     private boolean mIsFlashOn = false;
     private TimerTask mFishTask;
+    private boolean mViberateOnFinish;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,6 +58,7 @@ public class QRScanActivity extends AppCompatActivity
                 finish();
             }
         };
+        mViberateOnFinish = getIntent().getBooleanExtra(EXTRA_VIBERATE, true);
         mFlashTogger.setOnClickListener(v -> switchFlashLight());
     }
 
@@ -111,10 +113,15 @@ public class QRScanActivity extends AppCompatActivity
 
     @Override
     public void onScanQRCodeSuccess(String result) {
-        vibrate();
-        Intent intent = new Intent(this, WXPageActivity.class);
+        if (mViberateOnFinish) {
+            vibrate();
+        }
+        /*Intent intent = new Intent(this, WXPageActivity.class);
         intent.setData(Uri.parse(result));
-        startActivity(intent);
+        startActivity(intent);*/
+        Intent intent = new Intent();
+        intent.putExtra(EXTRA_CONTENT, result);
+        setResult(RESULT_OK, intent);
         finish();
     }
 

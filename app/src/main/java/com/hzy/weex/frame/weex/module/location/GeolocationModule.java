@@ -10,8 +10,6 @@ import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.LocalBroadcastManager;
 
-import com.hzy.weex.frame.weex.module.location.ILocatable;
-import com.hzy.weex.frame.weex.module.location.LocationFactory;
 import com.taobao.weex.WXSDKManager;
 import com.taobao.weex.annotation.JSMethod;
 import com.taobao.weex.common.Destroyable;

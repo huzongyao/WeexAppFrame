@@ -12,6 +12,7 @@ public class WXModuleManager {
             WXSDKEngine.registerComponent("richtext", RichText.class);
             WXSDKEngine.registerModule("geolocation", GeolocationModule.class);
             WXSDKEngine.registerModule("imagePicker", ImagePickerModule.class);
+            // 覆盖原来的WXNavigatorModule, 防止intent category和别人的一样
             WXSDKEngine.registerModule("navigator", ExNavigatorModule.class);
         } catch (Exception e) {
             e.printStackTrace();
