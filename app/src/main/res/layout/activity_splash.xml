@@ -4,24 +4,21 @@
     android:layout_height="match_parent"
     android:background="#f1f1f1">
 
-    <LinearLayout
+    <com.hzy.weex.frame.widget.AutoWidthImageView
+        android:id="@+id/image_back"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/splash_back" />
+
+    <TextView
+        android:id="@+id/splash_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/app_name"
-            android:textColor="#666666"
-            android:textSize="16sp" />
-    </LinearLayout>
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="80dp"
+        android:text="@string/app_name"
+        android:textColor="#EE9572"
+        android:textSize="28sp" />
 
 </FrameLayout>

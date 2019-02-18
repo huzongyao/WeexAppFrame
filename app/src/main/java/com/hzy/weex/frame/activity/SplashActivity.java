@@ -2,34 +2,61 @@ package com.hzy.weex.frame.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.hzy.weex.frame.R;
 import com.hzy.weex.frame.constant.RouterHub;
-
-import java.util.Timer;
-import java.util.TimerTask;
+import com.hzy.weex.frame.widget.AutoWidthImageView;
 
 @Route(path = RouterHub.SPLASH_ACTIVITY)
 public class SplashActivity extends AppCompatActivity {
 
-    private static final long SPLASH_DELAY = 600L;
+    private static boolean isSplashPlayed = false;
+    private AutoWidthImageView mBackImage;
+    private TextView mSplashText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
-        startWXPageDelay();
+        if (isSplashPlayed) {
+            startWxPageAndFinish();
+        } else {
+            setContentView(R.layout.activity_splash);
+            mBackImage = findViewById(R.id.image_back);
+            mSplashText = findViewById(R.id.splash_text);
+            startWXPageDelay();
+            isSplashPlayed = true;
+        }
     }
 
     private void startWXPageDelay() {
-        new Timer().schedule(new TimerTask() {
+        mSplashText.setAnimation(AnimationUtils.loadAnimation(this, R.anim.splash_text_anim));
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.splash_back_anim);
+        animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
-            public void run() {
-                ARouter.getInstance().build(RouterHub.WX_PAGE_ACTIVITY).navigation();
-                finish();
+            public void onAnimationStart(Animation animation) {
             }
-        }, SPLASH_DELAY);
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                mBackImage.setVisibility(View.GONE);
+                startWxPageAndFinish();
+            }
+        });
+        mBackImage.setAnimation(animation);
+    }
+
+    private void startWxPageAndFinish() {
+        ARouter.getInstance().build(RouterHub.WX_PAGE_ACTIVITY).navigation();
+        finish();
     }
 }
