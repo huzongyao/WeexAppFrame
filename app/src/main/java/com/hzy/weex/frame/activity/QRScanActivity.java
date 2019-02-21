@@ -1,6 +1,5 @@
 package com.hzy.weex.frame.activity;
 
-import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -12,6 +11,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.blankj.utilcode.constant.PermissionConstants;
 import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.hzy.weex.frame.R;
@@ -80,7 +80,7 @@ public class QRScanActivity extends AppCompatActivity
     }
 
     private void startCameraAndSpot() {
-        PermissionUtils.permission(Manifest.permission.CAMERA)
+        PermissionUtils.permission(PermissionConstants.CAMERA)
                 .callback(new PermissionUtils.SimpleCallback() {
                     @Override
                     public void onGranted() {

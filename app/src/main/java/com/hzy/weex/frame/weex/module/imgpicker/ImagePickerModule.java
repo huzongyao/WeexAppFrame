@@ -1,6 +1,5 @@
 package com.hzy.weex.frame.weex.module.imgpicker;
 
-import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
@@ -9,6 +8,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
 
+import com.blankj.utilcode.constant.PermissionConstants;
 import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.UriUtils;
 import com.hzy.weex.frame.R;
@@ -51,7 +51,7 @@ public class ImagePickerModule extends WXModule {
     @SuppressWarnings("unused")
     public boolean pickImage(Map<String, Object> options, final JSCallback callback) {
         Context context = mWXSDKInstance.getContext();
-        if (context == null || !(context instanceof Activity)) {
+        if (!(context instanceof Activity)) {
             return false;
         }
         try {
@@ -83,7 +83,7 @@ public class ImagePickerModule extends WXModule {
     @SuppressWarnings("unused")
     public boolean takePhoto(Map<String, Object> options, final JSCallback callback) {
         Context context = mWXSDKInstance.getContext();
-        if (context == null || !(context instanceof Activity)) {
+        if (!(context instanceof Activity)) {
             return false;
         }
         try {
@@ -143,7 +143,7 @@ public class ImagePickerModule extends WXModule {
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private void compressImageAsync() {
         String outPath = ImagePickerHelper.INSTANCE.newPrivateImagePath();
-        PermissionUtils.permission(Manifest.permission.READ_EXTERNAL_STORAGE)
+        PermissionUtils.permission(PermissionConstants.STORAGE)
                 .callback(new PermissionUtils.SimpleCallback() {
                     @Override
                     public void onGranted() {

@@ -2,7 +2,6 @@ package com.hzy.weex.frame.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
@@ -48,7 +47,6 @@ public class SplashActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                mBackImage.setVisibility(View.GONE);
                 startWxPageAndFinish();
             }
         });

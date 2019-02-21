@@ -5,6 +5,8 @@ A Weex android framework just based like weex playground based on weex sdk
 * implement IWXHttpAdapter with OkHttpClient, so we can use cache to speed up.
 * implement IWXImgLoaderAdapter with Glide, so it will support gif and also function well.
 * implement IWebSocketAdapter with OkHttp WebSocket.
+* Add imagePicker module to pick some images
+* Add qrCode module to scan and generate QR code
 
 ### About Me
  * GitHub: [http://huzongyao.github.io/](http://huzongyao.github.io/)
