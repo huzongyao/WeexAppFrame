@@ -8,6 +8,11 @@ A Weex android framework just based like weex playground based on weex sdk
 * Add imagePicker module to pick some images
 * Add qrCode module to scan and generate QR code
 
+### 自定义模块说明
+* imagePicker 从图库选择图片或者拍照
+* qrCode 生成二维码或者打开扫码页面
+* preference 对名为wxPreference的SharedPreference进行增删改查
+
 ### About Me
  * GitHub: [http://huzongyao.github.io/](http://huzongyao.github.io/)
  * ITEye博客：[http://hzy3774.iteye.com/](http://hzy3774.iteye.com/)
