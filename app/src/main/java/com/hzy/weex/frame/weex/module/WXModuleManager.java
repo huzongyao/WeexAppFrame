@@ -12,7 +12,6 @@ public class WXModuleManager {
     public static void initialize() {
         try {
             WXSDKEngine.registerComponent("richtext", RichText.class);
-            WXSDKEngine.registerModule("geolocation", GeolocationModule.class);
             WXSDKEngine.registerModule("imagePicker", ImagePickerModule.class);
             // 覆盖原来的WXNavigatorModule, 防止intent category和别人的一样
             WXSDKEngine.registerModule("navigator", ExNavigatorModule.class);
@@ -20,6 +19,8 @@ public class WXModuleManager {
             WXSDKEngine.registerModule("qrCode", QRCodeModule.class);
             // SharedPreference相关模块
             WXSDKEngine.registerModule("preference", SharedPreferenceModule.class);
+            // 定位模块
+            WXSDKEngine.registerModule("geolocation", GeolocationModule.class);
         } catch (Exception e) {
             e.printStackTrace();
         }

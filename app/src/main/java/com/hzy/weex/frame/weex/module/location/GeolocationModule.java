@@ -37,6 +37,7 @@ public class GeolocationModule extends WXModule implements Destroyable {
      * @param params          JSON格式的参数(例如:准确度等).
      */
     @JSMethod
+    @SuppressWarnings("unused")
     public void getCurrentPosition(String successCallback, String errorCallback, String params) {
         mILocatable.setWXSDKInstance(mWXSDKInstance);
         if (checkPermission()) {
@@ -56,6 +57,7 @@ public class GeolocationModule extends WXModule implements Destroyable {
      * @param params          SON格式的参数(例如:准确度等).
      */
     @JSMethod
+    @SuppressWarnings("unused")
     public void watchPosition(String successCallback, String errorCallback, String params) {
         mILocatable.setWXSDKInstance(mWXSDKInstance);
         if (checkPermission()) {
@@ -72,6 +74,7 @@ public class GeolocationModule extends WXModule implements Destroyable {
      * @param registerID 注册时返回的唯一ID。
      */
     @JSMethod
+    @SuppressWarnings("unused")
     public void clearWatch(String registerID) {
         mILocatable.setWXSDKInstance(mWXSDKInstance);
         mILocatable.clearWatch(registerID);
