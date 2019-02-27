@@ -2,7 +2,7 @@ package com.hzy.weex.frame.weex.module;
 
 import com.hzy.weex.frame.weex.module.component.RichText;
 import com.hzy.weex.frame.weex.module.imgpicker.ImagePickerModule;
-import com.hzy.weex.frame.weex.module.location.GeolocationModule;
+import com.hzy.weex.frame.weex.module.location.LocationModule;
 import com.hzy.weex.frame.weex.module.prefrence.SharedPreferenceModule;
 import com.hzy.weex.frame.weex.module.qrcode.QRCodeModule;
 import com.taobao.weex.WXSDKEngine;
@@ -20,7 +20,7 @@ public class WXModuleManager {
             // SharedPreference相关模块
             WXSDKEngine.registerModule("preference", SharedPreferenceModule.class);
             // 定位模块
-            WXSDKEngine.registerModule("geolocation", GeolocationModule.class);
+            WXSDKEngine.registerModule("location", LocationModule.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
