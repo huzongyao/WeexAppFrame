@@ -7,6 +7,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.Utils;
@@ -18,44 +19,48 @@ public enum LocationInstance {
     private LocationManager mLocationManager;
 
     LocationInstance() {
+        mLocationManager = (LocationManager)
+                Utils.getApp().getSystemService(Context.LOCATION_SERVICE);
     }
-
-    public void getLocation(JSCallback callback) {
-        Location location = getLastLocation();
-        if (location != null) {
-            callback.invoke(saveLocation(location));
-        } else {
-            start(callback);
-        }
-    }
-
 
     @SuppressLint("MissingPermission")
-    public Location getLastLocation() {
-        if (mLocationManager == null) {
-            mLocationManager =
-                    (LocationManager) Utils.getApp().getSystemService(Context.LOCATION_SERVICE);
-        }
+    public void getLocation(JSCallback callback) {
         try {
-            return mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            Location location = null;
+            if (mLocationManager != null) {
+                location = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            }
+            if (location != null) {
+                callback.invoke(saveLocation(location));
+            } else {
+                callback.invoke(loadLocation());
+            }
+            start();
         } catch (Throwable e) {
             e.printStackTrace();
         }
-        return null;
     }
 
     @SuppressLint("MissingPermission")
-    public void start(JSCallback callback) {
-        if (mLocationManager == null) {
-            mLocationManager =
-                    (LocationManager) Utils.getApp().getSystemService(Context.LOCATION_SERVICE);
-        }
+    public void start() {
         try {
             mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
-                    3000, 50, new WXLocationListener(callback));
+                    3000, 100, new WXLocationListener());
         } catch (Throwable e) {
             e.printStackTrace();
         }
+    }
+
+    public JSONObject loadLocation() {
+        String jsonString = SPUtils.getInstance().getString("location");
+        try {
+            JSONObject locationObject = JSON.parseObject(jsonString);
+            if (locationObject != null) {
+                return locationObject;
+            }
+        } catch (Exception ignored) {
+        }
+        return null;
     }
 
     public JSONObject saveLocation(Location location) {
@@ -75,16 +80,9 @@ public enum LocationInstance {
 
     private class WXLocationListener implements LocationListener {
 
-        private final JSCallback mCallback;
-
-        WXLocationListener(JSCallback callback) {
-            this.mCallback = callback;
-        }
-
         @Override
         public void onLocationChanged(Location location) {
             if (location != null) {
-                mCallback.invoke(saveLocation(location));
                 mLocationManager.removeUpdates(this);
             }
         }
