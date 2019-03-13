@@ -12,7 +12,7 @@ android {
     }
     defaultConfig {
         applicationId "com.hzy.weex.frame"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 28
         versionCode 1_00_02
         versionName "1.0.2"
@@ -72,5 +72,6 @@ dependencies {
     implementation('com.alibaba:arouter-api:1.4.1') {
         exclude group: 'com.android.support'
     }
+    implementation 'com.airbnb.android:lottie:2.7.0'
     annotationProcessor 'com.alibaba:arouter-compiler:1.2.2'
 }
