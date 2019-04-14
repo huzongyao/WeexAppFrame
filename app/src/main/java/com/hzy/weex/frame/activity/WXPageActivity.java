@@ -30,6 +30,7 @@ import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.hzy.weex.frame.BuildConfig;
 import com.hzy.weex.frame.R;
 import com.hzy.weex.frame.activity.base.WXBaseActivity;
 import com.hzy.weex.frame.constant.AppConfig;
@@ -255,7 +256,14 @@ public class WXPageActivity extends WXBaseActivity
         Intent intent = getIntent();
         mUri = intent.getData();
         if (mUri == null) {
-            mUri = Uri.parse(WXConstant.DEFAULT_WX_URL);
+            String url = WXConstant.DEFAULT_WX_URL;
+            mUri = Uri.parse(url);
+            // debug version show actionbar
+            if (BuildConfig.DEBUG) {
+                mUri = mUri.buildUpon()
+                        .appendQueryParameter("actionbar", "true")
+                        .build();
+            }
         }
         if (mUri != null) {
             mHasToolBar = mUri.getBooleanQueryParameter(WXConstant.WX_SHOW_ACTION_BAR,

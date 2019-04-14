@@ -1,5 +1,9 @@
 # WeexAppFrame
-A Weex android framework just based like weex playground based on weex sdk
+A Weex android framework just based like weex playground based on weex sdk.
+* 使用Weex搭建自己的小程序框架
+* 默认启动的项目：https://github.com/huzongyao/weex-lite-app
+* 默认加载脚本：https://huzongyao.github.io/weex-lite-app/assets/splash-page.js
+* 下载体验：https://github.com/huzongyao/WeexAppFrame/releases
 
 ### Details
 * implement IWXHttpAdapter with OkHttpClient, so we can use cache to speed up.
@@ -12,6 +16,10 @@ A Weex android framework just based like weex playground based on weex sdk
 * imagePicker 从图库选择图片或者拍照
 * qrCode 生成二维码或者打开扫码页面
 * preference 对名为wxPreference的SharedPreference进行增删改查
+
+#### screenshot
+* 截图展示
+![screenshot](https://github.com/huzongyao/weex-lite-app/blob/master/misc/screenshot.jpg?raw=true)
 
 ### About Me
  * GitHub: [http://huzongyao.github.io/](http://huzongyao.github.io/)

@@ -14,8 +14,8 @@ android {
         applicationId "com.hzy.weex.frame"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 1_00_02
-        versionName "1.0.2"
+        versionCode 1_00_03
+        versionName "1.0.3"
         ndk {
             abiFilters 'armeabi-v7a'
         }
