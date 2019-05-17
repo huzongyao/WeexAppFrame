@@ -5,12 +5,6 @@
         android:duration="3000"
         android:fromXDelta="-20%"
         android:toXDelta="-5%" />
-    <scale
-        android:duration="3000"
-        android:fromXScale="1"
-        android:fromYScale="1"
-        android:toXScale="1.2"
-        android:toYScale="1.2" />
     <alpha
         android:duration="3000"
         android:fromAlpha="1"
