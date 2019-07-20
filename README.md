@@ -4,6 +4,8 @@ A Weex android framework just based like weex playground based on weex sdk.
 * 默认启动的项目：https://github.com/huzongyao/weex-lite-app
 * 默认加载脚本：https://huzongyao.github.io/weex-lite-app/assets/splash-page.js
 * 下载体验：https://github.com/huzongyao/WeexAppFrame/releases
+* Weex Project: https://weex.apache.org/
+* Weex Source Code: https://github.com/apache/incubator-weex
 
 ### Details
 * implement IWXHttpAdapter with OkHttpClient, so we can use cache to speed up.
