@@ -4,7 +4,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 
-public class AutoWidthImageView extends android.support.v7.widget.AppCompatImageView {
+public class AutoWidthImageView extends androidx.appcompat.widget.AppCompatImageView {
 
     public AutoWidthImageView(Context context) {
         super(context);

@@ -8,7 +8,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
@@ -324,7 +324,7 @@ public class ExNavigatorModule extends WXModule {
             e.printStackTrace();
         }
         if (hasAppCompatActivity && mWXSDKInstance.getContext() instanceof AppCompatActivity) {
-            android.support.v7.app.ActionBar actionbar = ((AppCompatActivity) mWXSDKInstance.getContext()).getSupportActionBar();
+            androidx.appcompat.app.ActionBar actionbar = ((AppCompatActivity) mWXSDKInstance.getContext()).getSupportActionBar();
             if (actionbar != null) {
                 switch (visibility) {
                     case Constants.Value.NAV_BAR_HIDDEN:

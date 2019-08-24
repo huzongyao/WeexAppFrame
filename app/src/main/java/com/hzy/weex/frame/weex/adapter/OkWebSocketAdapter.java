@@ -1,6 +1,6 @@
 package com.hzy.weex.frame.weex.adapter;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.taobao.weex.appfram.websocket.IWebSocketAdapter;

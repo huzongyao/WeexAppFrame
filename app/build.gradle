@@ -14,10 +14,10 @@ android {
         applicationId "com.hzy.weex.frame"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 1_00_03
-        versionName "1.0.3"
+        versionCode 1_00_04
+        versionName "1.0.4"
         ndk {
-            abiFilters 'armeabi-v7a'
+            abiFilters 'armeabi-v7a', 'arm64-v8a'
         }
         resConfigs "zh-rCN"
         javaCompileOptions {
@@ -58,17 +58,17 @@ static def buildTime() {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation 'com.android.support:recyclerview-v7:28.0.0'
-    implementation 'com.android.support:design:28.0.0'
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'com.google.android.material:material:1.0.0'
     implementation 'org.greenrobot:eventbus:3.1.1'
     implementation 'com.alibaba:fastjson:1.1.71.android'
     implementation 'com.taobao.android:weex_sdk:0.26.0'
     implementation 'cn.bingoogolapple:bga-qrcode-zxing:1.3.6'
-    implementation 'com.squareup.okhttp3:okhttp:3.12.1'
-    implementation 'com.blankj:utilcode:1.24.7'
-    implementation 'com.github.bumptech.glide:glide:4.8.0'
-    implementation 'com.github.bumptech.glide:okhttp3-integration:4.8.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.1.0'
+    implementation 'com.blankj:utilcode:1.25.3'
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    implementation 'com.github.bumptech.glide:okhttp3-integration:4.9.0'
     implementation('com.alibaba:arouter-api:1.5.0') {
         exclude group: 'com.android.support'
     }

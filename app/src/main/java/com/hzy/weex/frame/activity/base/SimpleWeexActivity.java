@@ -2,7 +2,7 @@ package com.hzy.weex.frame.activity.base;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 @SuppressLint("Registered")
 public class SimpleWeexActivity extends AbstractWeexActivity {
