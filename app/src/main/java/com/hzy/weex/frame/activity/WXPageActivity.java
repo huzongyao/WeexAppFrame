@@ -11,10 +11,6 @@ import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -23,6 +19,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -256,7 +257,7 @@ public class WXPageActivity extends WXBaseActivity
         Intent intent = getIntent();
         mUri = intent.getData();
         if (mUri == null) {
-            String url = WXConstant.DEFAULT_WX_URL;
+            String url = getString(R.string.DEFAULT_WX_URL);
             mUri = Uri.parse(url);
             // debug version show actionbar
             if (BuildConfig.DEBUG) {
