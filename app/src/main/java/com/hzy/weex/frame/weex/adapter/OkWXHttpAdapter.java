@@ -37,6 +37,10 @@ public class OkWXHttpAdapter implements IWXHttpAdapter {
                 .build();
     }
 
+    public OkHttpClient getClient() {
+        return mOkHttpClient;
+    }
+
     @Override
     public void sendRequest(WXRequest request, OnHttpListener listener) {
         String method = request.method == null ? "GET" : request.method.toUpperCase();
