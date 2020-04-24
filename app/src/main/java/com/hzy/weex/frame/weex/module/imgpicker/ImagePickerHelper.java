@@ -75,7 +75,7 @@ public enum ImagePickerHelper {
             if (height > maxH) {
                 heightScale = height / maxH;
             }
-            options.inSampleSize = widthScale > heightScale ? widthScale : heightScale;
+            options.inSampleSize = Math.max(widthScale, heightScale);
             options.inJustDecodeBounds = false;
             Bitmap bitmap = BitmapFactory.decodeFile(srcPath, options);
             FileOutputStream fos = new FileOutputStream(outPath);

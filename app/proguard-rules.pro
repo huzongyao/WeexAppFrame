@@ -83,3 +83,13 @@
 # -keep class * implements com.alibaba.android.arouter.facade.template.IProvider
 -dontwarn javax.lang.**
 
+# 腾讯定位SDK
+-keepclassmembers class ** {
+    public void on*Event(...);
+}
+-keep class c.t.**{*;}
+-keep class com.tencent.map.geolocation.**{*;}
+
+-dontwarn  org.eclipse.jdt.annotation.**
+-dontwarn  c.t.**
+

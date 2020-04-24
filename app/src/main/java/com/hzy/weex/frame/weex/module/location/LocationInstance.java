@@ -1,54 +1,117 @@
 package com.hzy.weex.frame.weex.module.location;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.os.Bundle;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.Utils;
 import com.taobao.weex.bridge.JSCallback;
+import com.tencent.map.geolocation.TencentLocation;
+import com.tencent.map.geolocation.TencentLocationListener;
+import com.tencent.map.geolocation.TencentLocationManager;
+import com.tencent.map.geolocation.TencentLocationRequest;
 
-public enum LocationInstance {
+
+public enum LocationInstance implements TencentLocationListener {
     INSTANCE;
 
-    private LocationManager mLocationManager;
+    private TencentLocationManager mLocationManager;
+    private TencentLocationRequest mLocationRequest;
+    private JSCallback mJsCallback;
 
     LocationInstance() {
-        mLocationManager = (LocationManager)
-                Utils.getApp().getSystemService(Context.LOCATION_SERVICE);
+        try {
+            mLocationRequest = TencentLocationRequest.create()
+                    .setRequestLevel(TencentLocationRequest.REQUEST_LEVEL_POI)
+                    .setAllowGPS(true);
+            mLocationManager = TencentLocationManager.getInstance(Utils.getApp());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @SuppressLint("MissingPermission")
     public void getLocation(JSCallback callback) {
         try {
-            Location location = null;
-            if (mLocationManager != null) {
-                location = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-            }
-            if (location != null) {
-                callback.invoke(saveLocation(location));
-            } else {
-                callback.invoke(loadLocation());
-            }
+            mJsCallback = callback;
             start();
         } catch (Throwable e) {
             e.printStackTrace();
         }
     }
 
-    @SuppressLint("MissingPermission")
-    public void start() {
+    @Override
+    public void onLocationChanged(TencentLocation location, int error, String reason) {
         try {
-            mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
-                    3000, 100, new WXLocationListener());
+            if (mJsCallback != null) {
+                if (TencentLocation.ERROR_OK == error) {
+                    mJsCallback.invoke(saveLocation(location));
+                } else {
+                    mJsCallback.invoke(loadLocation());
+                }
+            }
+            stop();
+            LogUtils.d("onLocationChanged la:" + location.getLatitude() +
+                    " lo:" + location.getLongitude() + " addr:" + location.getAddress());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onStatusUpdate(String name, int status, String desc) {
+        LogUtils.d("onStatusUpdate name:" + name + " status:" + status + " desc:" + desc);
+    }
+
+    /**
+     * 开始定位
+     */
+    private void start() {
+        try {
+            int error = mLocationManager.requestLocationUpdates(mLocationRequest, this);
+            if (error != 0) {
+                stop();
+                if (mJsCallback != null) {
+                    mJsCallback.invoke(loadLocation());
+                }
+            }
         } catch (Throwable e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 停止定位
+     */
+    private void stop() {
+        try {
+            mLocationManager.removeUpdates(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private JSONObject saveLocation(TencentLocation location) {
+        JSONObject jObj = new JSONObject();
+        try {
+            jObj.put("latitude", String.valueOf(location.getLatitude()));
+            jObj.put("longitude", String.valueOf(location.getLongitude()));
+            jObj.put("nation", location.getNation());
+            jObj.put("province", location.getProvince());
+            jObj.put("city", location.getCity());
+            jObj.put("district", location.getDistrict());
+            jObj.put("town", location.getTown());
+            jObj.put("village", location.getVillage());
+            jObj.put("street", location.getStreet());
+            String jsonString = jObj.toJSONString();
+            SPUtils.getInstance().put("location", jsonString);
+            LogUtils.d("Save Location: " + jsonString);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return jObj;
     }
 
     public JSONObject loadLocation() {
@@ -61,42 +124,5 @@ public enum LocationInstance {
         } catch (Exception ignored) {
         }
         return null;
-    }
-
-    public JSONObject saveLocation(Location location) {
-        if (location != null) {
-            double l = location.getLatitude();
-            double o = location.getLongitude();
-            if (l != 0 && o != 0) {
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("latitude", String.valueOf(l));
-                jsonObject.put("longitude", String.valueOf(o));
-                SPUtils.getInstance().put("location", jsonObject.toJSONString());
-                return jsonObject;
-            }
-        }
-        return null;
-    }
-
-    private class WXLocationListener implements LocationListener {
-
-        @Override
-        public void onLocationChanged(Location location) {
-            if (location != null) {
-                mLocationManager.removeUpdates(this);
-            }
-        }
-
-        @Override
-        public void onStatusChanged(String provider, int status, Bundle extras) {
-        }
-
-        @Override
-        public void onProviderEnabled(String provider) {
-        }
-
-        @Override
-        public void onProviderDisabled(String provider) {
-        }
     }
 }
