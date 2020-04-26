@@ -1,6 +1,7 @@
 package com.hzy.weex.frame.weex.module;
 
 import com.hzy.weex.frame.weex.image.FrescoImage;
+import com.hzy.weex.frame.weex.module.device.ExDeviceInfoModule;
 import com.hzy.weex.frame.weex.module.imgpicker.ImagePickerModule;
 import com.hzy.weex.frame.weex.module.location.LocationModule;
 import com.hzy.weex.frame.weex.module.prefrence.SharedPreferenceModule;
@@ -22,12 +23,12 @@ public class WXModuleManager {
             WXSDKEngine.registerModule("preference", SharedPreferenceModule.class);
             // 定位模块
             WXSDKEngine.registerModule("location", LocationModule.class);
-            // Fresco
-            WXSDKEngine.registerComponent(
-                    new SimpleComponentHolder(FrescoImage.class, new FrescoImage.Creator()),
+            // Fresco图片加载
+            WXSDKEngine.registerComponent(new SimpleComponentHolder(FrescoImage.class, new FrescoImage.Creator()),
                     false,
                     WXBasicComponentType.IMAGE,
                     WXBasicComponentType.IMG);
+            WXSDKEngine.registerModule("deviceInfo", ExDeviceInfoModule.class);
         } catch (Exception e) {
             e.printStackTrace();
         }

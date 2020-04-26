@@ -1,10 +1,11 @@
 package com.hzy.weex.frame.weex.adapter;
 
 import android.content.Context;
-import androidx.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
+
+import androidx.annotation.Nullable;
 
 import com.taobao.weex.WXSDKInstance;
 

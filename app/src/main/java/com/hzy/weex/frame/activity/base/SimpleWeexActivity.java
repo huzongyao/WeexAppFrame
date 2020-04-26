@@ -2,6 +2,7 @@ package com.hzy.weex.frame.activity.base;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 
 @SuppressLint("Registered")

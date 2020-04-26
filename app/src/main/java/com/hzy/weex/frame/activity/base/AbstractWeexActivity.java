@@ -3,13 +3,14 @@ package com.hzy.weex.frame.activity.base;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.ViewGroup;
+
 import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import android.view.KeyEvent;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hzy.weex.frame.weex.adapter.WXAnalyzerDelegate;

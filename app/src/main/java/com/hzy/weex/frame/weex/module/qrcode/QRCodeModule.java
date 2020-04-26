@@ -10,13 +10,13 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.hzy.weex.frame.activity.QRScanActivity;
 import com.hzy.weex.frame.constant.AppConfig;
 import com.hzy.weex.frame.constant.RequestCode;
+import com.hzy.weex.frame.weex.module.ExBaseModule;
 import com.taobao.weex.annotation.JSMethod;
 import com.taobao.weex.bridge.JSCallback;
-import com.taobao.weex.common.WXModule;
 
 import java.util.Map;
 
-public class QRCodeModule extends WXModule {
+public class QRCodeModule extends ExBaseModule {
 
     private Map<String, Object> mScanOptions;
     private JSCallback mCallback;

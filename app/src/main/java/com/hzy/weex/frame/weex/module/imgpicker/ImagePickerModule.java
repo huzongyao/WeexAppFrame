@@ -13,9 +13,9 @@ import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.UriUtils;
 import com.hzy.weex.frame.R;
 import com.hzy.weex.frame.constant.RequestCode;
+import com.hzy.weex.frame.weex.module.ExBaseModule;
 import com.taobao.weex.annotation.JSMethod;
 import com.taobao.weex.bridge.JSCallback;
-import com.taobao.weex.common.WXModule;
 
 import java.io.File;
 import java.util.HashMap;
@@ -27,7 +27,7 @@ import java.util.concurrent.Executors;
 /**
  * 模块用于选择图片
  */
-public class ImagePickerModule extends WXModule {
+public class ImagePickerModule extends ExBaseModule {
 
     private final ExecutorService mExecutor;
     private JSCallback mCallback;
@@ -165,20 +165,5 @@ public class ImagePickerModule extends WXModule {
                     public void onDenied() {
                     }
                 }).request();
-    }
-
-    @SuppressWarnings("unchecked")
-    private <T> T getOption(Map<String, Object> options, String key, T defValue) {
-        Object value = options.get(key);
-        if (value == null) {
-            return defValue;
-        } else {
-            try {
-                return (T) value;
-            } catch (Exception e) {
-                e.printStackTrace();
-                return defValue;
-            }
-        }
     }
 }

@@ -3,12 +3,13 @@ package com.hzy.weex.frame.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.blankj.utilcode.constant.PermissionConstants;

@@ -8,8 +8,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import androidx.appcompat.app.AppCompatActivity;
 import android.text.TextUtils;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONException;
@@ -318,7 +319,7 @@ public class ExNavigatorModule extends WXModule {
         boolean result = false;
         boolean hasAppCompatActivity = false;
         try {
-            Class.forName("android.support.v7.app.AppCompatActivity");
+            Class.forName("androidx.appcompat.app.AppCompatActivity");
             hasAppCompatActivity = true;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
